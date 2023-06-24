@@ -1,5 +1,5 @@
 import { Exception_InvalidOperation } from "../../Exceptions/Exception_InvalidOperation.ts";
-
+import './xReadonlyArray.d.ts';
 
 export class xArray<T> implements IxArray<T>
 {
