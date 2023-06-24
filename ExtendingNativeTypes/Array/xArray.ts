@@ -1,16 +1,7 @@
-import { Exception_InvalidOperation } from "../Exceptions/Exception_InvalidOperation.ts";
+import { Exception_InvalidOperation } from "../../Exceptions/Exception_InvalidOperation.ts";
 
 
-Object.defineProperty(Array.prototype, 'x', 
-{
-    get: function()
-    {
-        return new xArray<any>(this);
-    }
-});
-
-
-export class xArray<T>
+export class xArray<T> implements IxArray<T>
 {
     constructor(private array: Array<T>)
     {
@@ -143,3 +134,12 @@ export class xArray<T>
         return output;
     }
 }
+
+
+Object.defineProperty(Array.prototype, 'x', 
+{
+    get: function()
+    {
+        return new xArray<any>(this);
+    }
+});
