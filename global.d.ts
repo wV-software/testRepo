@@ -30,9 +30,5 @@
 //     removeRange(index: number, maxCount: number): {removed: T[]};
 // }
 
-import type { xArrayImpl } from "./ExtendingNativeTypes/xArrayImpl.ts";
+// import type { xArrayImpl } from "./ExtendingNativeTypes/xArrayImpl.ts";
 
-declare interface Array<T>
-{
-    get x(): xArrayImpl<T>;
-}
