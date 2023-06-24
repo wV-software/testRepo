@@ -1,4 +1,4 @@
-interface Array<T>
+declare interface Array<T>
 {
     count(): number;
 }
