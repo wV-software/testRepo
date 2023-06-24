@@ -12,5 +12,5 @@ interface IxReadonlyArray<T>
 
 declare interface ReadonlyArray<T>
 {
-    get xt(): IxReadonlyArray<T>;
+    get x(): IxReadonlyArray<T>;
 }
