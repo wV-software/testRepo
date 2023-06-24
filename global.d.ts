@@ -1,4 +1,6 @@
+import { xArrayImpl } from "./ExtendingNativeTypes/xArrayImpl.ts";
+
 declare interface Array<T>
 {
-    count(): number;
+    get x(): xArrayImpl<T>;
 }

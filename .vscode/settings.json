@@ -1,4 +1,6 @@
 {
+    "workbench.tree.indent": 20,
+    "workbench.tree.renderIndentGuides": "always",
     "deno.enable": true,
     "deno.lint": false,
     "deno.unstable": true
