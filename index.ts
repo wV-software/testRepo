@@ -1,4 +1,4 @@
 export function test()
 {
-    console.log('hello Deno');
+    console.log('MODIFIED without releasing new release');
 }
