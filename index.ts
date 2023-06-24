@@ -1,6 +1,4 @@
 
-import './extensionMethods.ts';
-
 const arrProto = Array.prototype as any;
 arrProto.count = function()
 {
