@@ -1,5 +1,5 @@
 
-import './types.ts';
+import './global.d.ts';
 
 const arrProto = Array.prototype as any;
 arrProto.count = function()
