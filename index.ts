@@ -1,10 +1,10 @@
 
-import { xArrayImpl } from "./ExtendingNativeTypes/xArrayImpl.ts";
-import './global.d.ts';
+import { xArray } from "./ExtendingNativeTypes/xArray.ts";
+import './ExtendingNativeTypes/xArray.d.ts';
 
 interface Array<T>
 {
-    get x(): xArrayImpl<T>;
+    get x(): xArray<T>;
 }
 
 

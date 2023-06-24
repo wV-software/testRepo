@@ -5,12 +5,12 @@ Object.defineProperty(Array.prototype, 'x',
 {
     get: function()
     {
-        return new xArrayImpl<any>(this);
+        return new xArray<any>(this);
     }
 });
 
 
-export class xArrayImpl<T>
+export class xArray<T>
 {
     constructor(private array: Array<T>)
     {
