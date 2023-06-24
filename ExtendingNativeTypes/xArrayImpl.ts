@@ -1,5 +1,6 @@
 import { Exception_InvalidOperation } from "../Exceptions/Exception_InvalidOperation.ts";
 
+
 Object.defineProperty(Array.prototype, 'x', 
 {
     get: function()
