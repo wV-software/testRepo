@@ -2,7 +2,7 @@
 import { xArrayImpl } from "./ExtendingNativeTypes/xArrayImpl.ts";
 import './global.d.ts';
 
-declare interface Array<T>
+interface Array<T>
 {
     get x(): xArrayImpl<T>;
 }
