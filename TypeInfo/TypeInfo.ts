@@ -4,7 +4,7 @@ import { Exception_InvalidProgramState } from "../Exceptions/Exception_InvalidPr
 import { Constructor } from "./Constructor.ts";
 
 
-export function t(typeOrObject: Function|TypeInfo|Object): TypeInfo
+function t(typeOrObject: Function|TypeInfo|Object): TypeInfo
 {
     if(!typeOrObject) throw new Exception_ArgumentNull(`typeOrObject`);
     if(typeOrObject.constructor === TypeInfo) return typeOrObject;
