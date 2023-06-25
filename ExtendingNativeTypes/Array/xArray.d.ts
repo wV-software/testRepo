@@ -1,6 +1,6 @@
 interface IxArray<T> extends IxReadonlyArray<T>
 {
-    addMany(items: T[]): void;
+    insert(index: number, ...items: T[]): void;
 
     sortInPlace(comparer: (a: T, b: T) => number): T[];
 
@@ -10,9 +10,11 @@ interface IxArray<T> extends IxReadonlyArray<T>
 
     union(another: T[]): T[];
 
-    removeAt(index: number): void;
 
-    removeRange(index: number, maxCount: number): { removed: T[] };
+    reset(): void;
+
+    replaceRange(range: { start: number; end: number; } | { start: number; count: number; }, replacement: T[]): {removed: T[]}
+    removeAt(index: number): { removed: T[] };
 }
 declare interface Array<T>
 {
