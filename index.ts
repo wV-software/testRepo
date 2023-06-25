@@ -5,7 +5,7 @@ import './ExtendingNativeTypes/String/xString.d.ts';
 import './ExtendingNativeTypes/Map/xMap.d.ts';
 import './ExtendingNativeTypes/Object/xObject.d.ts'
 
-export { Guid } from './Guid.ts';
+export { Guid } from './Guid/Guid.ts';
 export {Exception} from './Exceptions/Exception.ts'
 export {Exception_ArgumentInvalid} from './Exceptions/Exception_ArgumentInvalid.ts'
 export {Exception_ArgumentNull} from './Exceptions/Exception_ArgumentNull.ts'

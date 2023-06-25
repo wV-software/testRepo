@@ -16,7 +16,7 @@ export class KeyValuePair<TKey, TValue>
 
 type actionOnKeyValue<TKey, TValue> = (kv:KeyValuePair<TKey, TValue>) => void; 
 
-export class xMap<TKey, TValue>
+export class xMap<TKey, TValue> implements IxMap<TKey, TValue> 
 { 
     constructor(private _map: Map<TKey, TValue>) { }
 
