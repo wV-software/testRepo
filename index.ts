@@ -19,7 +19,8 @@ export {WeekDay} from './DateTime/WeekDay.ts';
 export {Regex} from './Regex/Regex.ts';
 export type {Constructor} from './TypeInfo/Constructor.ts';
 export {TypeInfo} from './TypeInfo/TypeInfo.ts';
-
+export {isPrimitive} from './globalFunctions/isPrimitive.ts';
+export {waitAsync, CancellationToken} from './globalFunctions/waitAsync.ts'
 
 class Something
 {
@@ -29,7 +30,7 @@ class Something
 let x = {test: ""}
 
 
-export function test()
+function test()
 {
     const arr = [1,2,3];
 
