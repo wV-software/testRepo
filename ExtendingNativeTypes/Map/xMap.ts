@@ -16,18 +16,18 @@ export class KeyValuePair<TKey, TValue>
 
 type actionOnKeyValue<TKey, TValue> = (kv:KeyValuePair<TKey, TValue>) => void; 
 
-export class xMap<TKey, TValue> implements IxMap<TKey, TValue> 
+export class xMap<K, V> implements IxMap<K, V> 
 { 
-    constructor(private _map: Map<TKey, TValue>) { }
+    constructor(private _map: Map<K, V>) { }
 
-    public add(key:TKey, value:TValue):void
+    public add(key:K, value:V):void
     {
         if(this._map.has(key)) 
         throw new Exception_ArgumentInvalid('key', key, `The Map aleardy has the specified key: ${key}`);     
         this._map.set(key, value);
     }
 
-    public ensure(key:TKey, value:TValue, overwriteIfExising: boolean = false): TValue
+    public ensure(key:K, value:V, overwriteIfExising: boolean = false): V
     {
         if(this._map.has(key))
         {
@@ -38,7 +38,7 @@ export class xMap<TKey, TValue> implements IxMap<TKey, TValue>
             }
             else
             {
-                return this._map.get(key) as TValue;
+                return this._map.get(key) as V;
             }
         }
         else
@@ -48,19 +48,19 @@ export class xMap<TKey, TValue> implements IxMap<TKey, TValue>
         }
     }
 
-    public removeIfAny(key:TKey): {removedItem: TValue|undefined}
+    public removeIfAny(key:K): {removedItem: V|undefined}
     {
         const output = {removedItem: this._map.get(key)};
         this._map.delete(key);
         return output;
     }
 
-    get keys(): TKey[]
+    get keys(): K[]
     {
         return Array.from(this._map.keys());
     }
 
-    get values(): TValue[]
+    get values(): V[]
     {
         return Array.from(this._map.values());
     }
@@ -70,7 +70,7 @@ export class xMap<TKey, TValue> implements IxMap<TKey, TValue>
         this._map.clear();
     }
 
-    containsKey(key:TKey): boolean
+    containsKey(key:K): boolean
     {
         for(let k of this._map.keys())
         {
@@ -83,6 +83,19 @@ export class xMap<TKey, TValue> implements IxMap<TKey, TValue>
     get length(): number
     {
         return this._map.size;
+    }
+
+    isAny(checker?:(kv: KeyValuePair<K, V>)=>boolean): boolean
+    {
+        if(!checker) return this._map.size > 0;
+
+        for(let entry of this._map.entries())
+        {
+            const kv = new KeyValuePair<K, V>(entry[0] as K, entry[1] as V);
+            if(checker(kv)) return true;
+        }
+
+        return false;
     }
 }
 

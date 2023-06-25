@@ -3,15 +3,17 @@ interface IKeyValuePair<TKey, TValue> {
     Value: TValue;
 }
 
-interface IxMap<TKey, TValue> {
-    readonly keys: TKey[];
-    readonly values: TValue[];
+interface IxMap<K, V> {
+    readonly keys: K[];
+    readonly values: V[];
     readonly length: number;
-    add(key: TKey, value: TValue): void;
-    ensure(key: TKey, value: TValue, overwriteIfExising: boolean): TValue;
-    removeIfAny(key: TKey): { removedItem: TValue|undefined; };
+    add(key: K, value: V): void;
+    ensure(key: K, value: V, overwriteIfExising: boolean): V;
+    removeIfAny(key: K): { removedItem: V|undefined; };
     clear(): void;
-    containsKey(key: TKey): boolean;
+    containsKey(key: K): boolean;
+
+    isAny(checker?:(kv: IKeyValuePair<K, V>)=>boolean): boolean;
 }
 declare interface Map<K,V>
 {
