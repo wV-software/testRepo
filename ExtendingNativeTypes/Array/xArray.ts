@@ -15,7 +15,7 @@ export class xArray<T> implements IxArray<T>
         return [...this.array];
     }
 
-    select<TReturn>(func: (item: T, index?: number, items?:T[])=> TReturn): TReturn[]
+    select<TReturn>(func: (item: T, index?: number, items?: T[]) => TReturn): TReturn[]
     {
         return this.array.map(func);
     }
@@ -118,19 +118,19 @@ export class xArray<T> implements IxArray<T>
     }
     firstIndex(checker: (i: T) => boolean): number 
     {
-        for(let x=0; x<this.array.length; x++)
+        for (let x = 0; x < this.array.length; x++)
         {
-            if(checker(this.array[x])) return x;
-        }    
+            if (checker(this.array[x])) return x;
+        }
 
         return -1;
     }
     lastIndex(checker: (i: T) => boolean): number 
     {
-        for(let x=this.array.length-1; x>=0; x--)
+        for (let x = this.array.length - 1; x >= 0; x--)
         {
-            if(checker(this.array[x])) return x;
-        }    
+            if (checker(this.array[x])) return x;
+        }
 
         return -1;
     }
@@ -255,21 +255,21 @@ export class xArray<T> implements IxArray<T>
         }
     }
 
-    removeWhere(selector: (item: T)=>boolean): {removed: T[]}
+    removeWhere(selector: (item: T) => boolean): { removed: T[] }
     {
         const removed: T[] = [];
-        for(let x=0; x<this.array.length; x++)
+        for (let x = 0; x < this.array.length; x++)
         {
             const item = this.array[x];
-            if(selector(item))
+            if (selector(item))
             {
                 removed.push(item);
                 this.removeAt(x);
-                x --;
+                x--;
             }
         }
 
-        return {removed};
+        return { removed };
     }
 
     toMap<TKey>(keySelector: (item: T) => TKey, distinctItems: boolean): Map<TKey, T[]>
@@ -297,6 +297,17 @@ export class xArray<T> implements IxArray<T>
     contains(item: T): boolean
     {
         return !!this.first(i => i === item);
+    }
+    distinct()
+    {
+        const output: T[] = [];
+        const clone = [...this.array];
+        while(clone.length > 0)
+        {
+            const {removed} = clone.x.removeWhere(i => i === clone[0]);
+            output.push(removed[0]);
+        }
+        return output;
     }
 }
 
