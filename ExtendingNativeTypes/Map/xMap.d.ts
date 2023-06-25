@@ -1,4 +1,4 @@
-interface IKeyValuePair<TKey, TValue> {
+declare interface IKeyValuePair<TKey, TValue> {
     Key: TKey;
     Value: TValue;
 }
