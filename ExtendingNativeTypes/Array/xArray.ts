@@ -15,12 +15,12 @@ export class xArray<T> implements IxArray<T>
         return [...this.array];
     }
 
-    // turnTo<TReturn>(convertor: (value: T, index: number, array: T[]) => TReturn): TReturn[]
-    // {
-    //     return this.array.map(convertor);
-    // }
+    select<TReturn>(func: (item: T, index?: number, items?:T[])=> TReturn): TReturn[]
+    {
+        return this.array.map(func);
+    }
 
-    mapToMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[]
+    selectMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[]
     {
         const result: TReturn[] = [];
 
