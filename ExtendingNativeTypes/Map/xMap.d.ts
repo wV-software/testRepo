@@ -3,7 +3,7 @@ interface IKeyValuePair<TKey, TValue> {
     Value: TValue;
 }
 
-interface IxMap<K, V> {
+declare interface IxMap<K, V> {
     get keys(): K[];
     get values(): V[];
     readonly length: number;
