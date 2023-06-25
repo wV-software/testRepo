@@ -13,6 +13,7 @@ interface IxReadonlyArray<T>
     intersect(another: T[]): T[];
     intersects(another: T[]): boolean;
     clone(): T[];
+    contains(item: T): boolean;
     toMap<TKey>(keySelector: (item: T)=>TKey, distinctItems:boolean): Map<TKey, T[]>;
 }
 

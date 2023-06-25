@@ -186,7 +186,7 @@ export class xArray<T> implements IxArray<T>
         this.array.length = 0;
     }
 
-    replaceRange(range: { start: number; end: number; } | { start: number; count: number; }, replacement: T[]): {removed: T[]}
+    replaceRange(range: { start: number; end: number; } | { start: number; count: number; }, replacement: T[]): { removed: T[] }
     {
         if (range.start < 0 || range.start >= this.array.length)
         {
@@ -202,7 +202,7 @@ export class xArray<T> implements IxArray<T>
 
             const count = end - range.start + 1;
             const removed = [...this.array].splice(range.start, count, ...replacement);
-            return {removed};
+            return { removed };
         }
         else if (Object.hasOwn(range, 'count'))
         {
@@ -213,7 +213,7 @@ export class xArray<T> implements IxArray<T>
             }
 
             const removed = [...this.array].splice(range.start, count, ...replacement);
-            return {removed};
+            return { removed };
         }
         else
         {
@@ -241,6 +241,11 @@ export class xArray<T> implements IxArray<T>
             }
         }
         return map;
+    }
+
+    contains(item: T): boolean
+    {
+        return !!this.first(i => i === item);
     }
 }
 
