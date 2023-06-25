@@ -16,6 +16,8 @@ export {TimeSpan} from './DateTime/TimeSpan.ts';
 export {DateFormat} from './DateTime/DateFormat.ts';
 export {WeekDay} from './DateTime/WeekDay.ts';
 export {Regex} from './Regex/Regex.ts';
+export type {Constructor} from './TypeInfo/Constructor.ts';
+export {TypeInfo} from './TypeInfo/TypeInfo.ts';
 
 
 class Something
