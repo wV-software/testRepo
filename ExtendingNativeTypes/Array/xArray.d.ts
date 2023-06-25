@@ -42,6 +42,8 @@ interface IxArray<T> extends IxReadonlyArray<T>
 
     replaceRange(range: { start: number; end: number; } | { start: number; count: number; }, replacement: T[]): {removed: T[]}
     removeAt(index: number): { removed: T[] };
+
+    removeWhere(selector: (item: T)=>boolean): {removed: T[]}
 }
 declare interface Array<T>
 {
