@@ -1,7 +1,7 @@
 interface IxReadonlyArray<T>
 {
-    turnTo<TReturn>(callbackfn: (value: T, index: number, array: T[]) => TReturn): TReturn[];
-    turnToMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[];
+    // turnTo<TReturn>(callbackfn: (value: T, index: number, array: T[]) => TReturn): TReturn[];
+    mapToMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[];
     sort(comparer: (a: T, b: T) => number): T[];
     reverse(): T[];
     isAny(checker?: (arg: T) => boolean): boolean;
@@ -15,6 +15,7 @@ interface IxReadonlyArray<T>
     clone(): T[];
     contains(item: T): boolean;
     toMap<TKey>(keySelector: (item: T)=>TKey, distinctItems:boolean): Map<TKey, T[]>;
+    where(checker: (arg: T, index?: number) => boolean): T[];
 }
 
 declare interface ReadonlyArray<T>

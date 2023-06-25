@@ -85,7 +85,7 @@ export class DateTime
         else
         {
             let numParts!: number[];
-            numParts = parts.x.turnTo(sp=>parseInt(sp));
+            numParts = parts.map(sp=>parseInt(sp));
 
             if(numParts.x.isAny(n => isNaN(n)))
             {

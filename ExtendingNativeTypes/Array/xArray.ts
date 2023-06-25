@@ -10,12 +10,12 @@ export class xArray<T> implements IxArray<T>
         return [...this.array];
     }
 
-    turnTo<TReturn>(callbackfn: (value: T, index: number, array: T[]) => TReturn): TReturn[]
-    {
-        return this.array.map(callbackfn);
-    }
+    // turnTo<TReturn>(convertor: (value: T, index: number, array: T[]) => TReturn): TReturn[]
+    // {
+    //     return this.array.map(convertor);
+    // }
 
-    turnToMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[]
+    mapToMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[]
     {
         const result: TReturn[] = [];
 
@@ -31,6 +31,10 @@ export class xArray<T> implements IxArray<T>
         return result;
     }
 
+    where(checker: (arg: T, index?: number) => boolean): T[]
+    {
+        return this.array.filter((item, index) => checker(item, index));
+    }
 
     insert(index: number, ...items: T[])
     {
