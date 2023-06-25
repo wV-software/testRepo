@@ -16,6 +16,7 @@ interface IxReadonlyArray<T>
     intersects(another: T[]): boolean;
     clone(): T[];
     contains(item: T): boolean;
+    distinct(): T[];
     toMap<TKey>(keySelector: (item: T)=>TKey, distinctItems:boolean): Map<TKey, T[]>;
     where(checker: (arg: T, index?: number) => boolean): T[];
 }

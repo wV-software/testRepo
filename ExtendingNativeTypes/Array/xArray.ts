@@ -298,7 +298,7 @@ export class xArray<T> implements IxArray<T>
     {
         return !!this.first(i => i === item);
     }
-    distinct()
+    distinct(): T[]
     {
         const output: T[] = [];
         const clone = [...this.array];
