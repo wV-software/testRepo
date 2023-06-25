@@ -99,7 +99,7 @@ export class xMap<K, V> implements IxMap<K, V>
     }
 }
 
-Object.defineProperty(Array.prototype, 'x',
+Object.defineProperty(Map.prototype, 'x',
     {
         get: function ()
         {
