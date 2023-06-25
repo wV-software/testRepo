@@ -5,6 +5,11 @@ export class xArray<T> implements IxArray<T>
 {
     constructor(private array: Array<T>) { }
 
+    add<T>(item: T): void
+    {
+        this.array.push(item);
+    }
+
     clone(): T[]
     {
         return [...this.array];

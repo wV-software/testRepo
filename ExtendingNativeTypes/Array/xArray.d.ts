@@ -1,6 +1,8 @@
 interface IxReadonlyArray<T>
 {
     // turnTo<TReturn>(callbackfn: (value: T, index: number, array: T[]) => TReturn): TReturn[];
+    
+    add(item: T): void;
     mapToMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[];
     sort(comparer: (a: T, b: T) => number): T[];
     reverse(): T[];
