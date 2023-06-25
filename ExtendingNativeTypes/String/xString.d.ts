@@ -11,7 +11,7 @@ interface IxString
 }
 
 
-declare interface String
+interface String
 {
     get x(): IxString;
 }
