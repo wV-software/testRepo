@@ -1,4 +1,4 @@
-export class xObject implements IxObject
+export class xObject implements Object
 {
     constructor(private _obj: Object)
     {
