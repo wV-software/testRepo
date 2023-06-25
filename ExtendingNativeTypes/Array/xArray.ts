@@ -5,9 +5,9 @@ export class xArray<T> implements IxArray<T>
 {
     constructor(private array: Array<T>) { }
 
-    add(item: T): void
+    add(...items: T[]): void
     {
-        this.array.push(item);
+        this.array.push(...items);
     }
 
     clone(): T[]
@@ -106,8 +106,8 @@ export class xArray<T> implements IxArray<T>
     }
     first(checker?: (i: T) => boolean): T | undefined
     {
-        if(this.array.length === 0) return undefined;
-        if(!checker) return this.array[0];
+        if (this.array.length === 0) return undefined;
+        if (!checker) return this.array[0];
 
         for (const item of this.array)
         {
@@ -118,8 +118,8 @@ export class xArray<T> implements IxArray<T>
     }
     last(checker?: (i: T) => boolean): T | undefined
     {
-        if(this.array.length === 0) return undefined;
-        if(!checker) return this.array[this.array.length - 1];
+        if (this.array.length === 0) return undefined;
+        if (!checker) return this.array[this.array.length - 1];
 
         for (let x = this.array.length - 1; x > -1; x--)
         {
