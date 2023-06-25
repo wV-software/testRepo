@@ -9,6 +9,7 @@ interface IxReadonlyArray<T>
     areAll(checker: (arg: T) => boolean): boolean;
     isEmpty(): boolean;
     first(checker?: (i: T) => boolean): T | undefined;
+    firstIndex(checker: (i: T) => boolean): number;
     last(checker?: (i:T)=>boolean): T|undefined;
     except(another: T[]): T[];
     intersect(another: T[]): T[];

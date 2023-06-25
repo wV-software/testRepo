@@ -116,6 +116,25 @@ export class xArray<T> implements IxArray<T>
 
         return undefined;
     }
+    firstIndex(checker: (i: T) => boolean): number 
+    {
+        for(let x=0; x<this.array.length; x++)
+        {
+            if(checker(this.array[x])) return x;
+        }    
+
+        return -1;
+    }
+    lastIndex(checker: (i: T) => boolean): number 
+    {
+        for(let x=this.array.length-1; x>=0; x--)
+        {
+            if(checker(this.array[x])) return x;
+        }    
+
+        return -1;
+    }
+
     last(checker?: (i: T) => boolean): T | undefined
     {
         if (this.array.length === 0) return undefined;
