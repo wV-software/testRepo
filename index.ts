@@ -1,7 +1,9 @@
 
 import "./ExtendingNativeTypes/Array/xArray.ts";
 import './ExtendingNativeTypes/Array/xArray.d.ts';
+import './ExtendingNativeTypes/String/xString.ts';
 import './ExtendingNativeTypes/String/xString.d.ts';
+import './ExtendingNativeTypes/Map/xMap.ts';
 import './ExtendingNativeTypes/Map/xMap.d.ts';
 import './ExtendingNativeTypes/Object/xObject.d.ts'
 
