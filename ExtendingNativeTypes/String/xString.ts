@@ -34,7 +34,7 @@ export class xString implements IxString
         }
         else
         {
-            throw new Exception_UnintendedExecutionPath(``);
+            return this.str.substring(range.start);
         }
     }
 

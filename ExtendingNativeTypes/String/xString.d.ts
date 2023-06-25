@@ -1,7 +1,7 @@
 interface IxString
 {
-    range(range:{start: number, end:number}|
-        {start: number, count: number}): string;
+    range(range:{start: number, end?:number}|
+        {start: number, count?: number}): string;
 
     replaceRange(range:{start: number, end:number}|{start: number, count: number}, replacement: string): string;
 
