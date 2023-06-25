@@ -1,4 +1,4 @@
-import { Exception_ArgumentNull } from "../../Exceptions/Exception_ArgumentNull.ts";
+import { Exception_ArgumentNull } from "../Exceptions/Exception_ArgumentNull.ts";
 import { DateFormat } from "./DateFormat.ts";
 import { TimeSpan } from "./TimeSpan.ts";
 import { WeekDay } from "./WeekDay.ts";

@@ -1,5 +1,5 @@
-import { Exception } from "../../Exceptions/Exception.ts";
-import { Exception_ArgumentInvalid } from "../../Exceptions/Exception_ArgumentInvalid.ts";
+import { Exception } from "../Exceptions/Exception.ts";
+import { Exception_ArgumentInvalid } from "../Exceptions/Exception_ArgumentInvalid.ts";
 import { Conv } from "./Conv.ts";
 
 export class TimeSpan
