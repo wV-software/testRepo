@@ -10,12 +10,12 @@ export class xArray<T> implements IxArray<T>
         return [...this.array];
     }
 
-    remodel<TReturn>(callbackfn: (value: T, index: number, array: T[]) => TReturn): TReturn[]
+    turnTo<TReturn>(callbackfn: (value: T, index: number, array: T[]) => TReturn): TReturn[]
     {
         return this.array.map(callbackfn);
     }
 
-    remodelToMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[]
+    turnToMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[]
     {
         const result: TReturn[] = [];
 

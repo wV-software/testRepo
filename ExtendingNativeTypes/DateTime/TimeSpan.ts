@@ -24,7 +24,7 @@ export class TimeSpan
             return undefined;
         }
 
-        let numParts = parts.x.remodel(sp=>new Number(sp).valueOf());
+        let numParts = parts.x.turnTo(sp=>new Number(sp).valueOf());
                        
         let day         = numParts[0]; 
         let hour        = (numParts.length > 1)? numParts[1] : 0; 
