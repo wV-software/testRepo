@@ -1,5 +1,4 @@
 import { Exception_ArgumentInvalid } from "../../Exceptions/Exception_ArgumentInvalid.ts";
-import { xObject } from "../Object/xObject.ts";
 
 export class KeyValuePair<TKey, TValue>
 {
@@ -100,9 +99,9 @@ export class xMap<K, V> implements IxMap<K, V>
 }
 
 Object.defineProperty(Map.prototype, 'x',
+{
+    get: function ()
     {
-        get: function ()
-        {
-            return new xObject(this);
-        }
-    });
+        return new xMap(this);
+    }
+});

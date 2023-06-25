@@ -1,13 +1,6 @@
-export class xObject implements Object
+
+Object.prototype.toMap = function(): Map<string, unknown>
 {
-    constructor(private _obj: Object)
-    {
-
-    }
-    toMap(): Map<string, unknown>
-    {
-        const output = new Map<string, unknown>(Object.entries(this._obj));
-        return output;
-    }
-
+    const output = new Map<string, unknown>(Object.entries(this));
+    return output;
 }
