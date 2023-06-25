@@ -4,8 +4,8 @@ declare interface IKeyValuePair<TKey, TValue> {
 }
 
 declare interface IxMap<K, V> {
-    get keys(): K[];
-    get values(): V[];
+    keys: K[];
+    values: V[];
     readonly length: number;
     add(key: K, value: V): void;
     ensure(key: K, value: V, overwriteIfExising: boolean): V;
