@@ -77,7 +77,7 @@ export class DateTime
 
         text = text.trim();
         let parts = text.split(/\s*\D\s*/); 
-        if([3,6,7].x.contains(parts.length) === false || parts.x.isAny(p=>/\D/.test(p)))
+        if([3,6,7].x.contains(parts.length) === false || parts.xIsAny(p=>/\D/.test(p)))
         {
             refResult.ErrorMessage = this._invalidFormatMessage;
             return false;
@@ -87,7 +87,7 @@ export class DateTime
             let numParts!: number[];
             numParts = parts.map(sp=>parseInt(sp));
 
-            if(numParts.x.isAny(n => isNaN(n)))
+            if(numParts.xIsAny(n => isNaN(n)))
             {
                 refResult.ErrorMessage = this._invalidFormatMessage;
                 return false;

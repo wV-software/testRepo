@@ -5,7 +5,7 @@ Deno.test({ name: "test Array.insertMany" },
     () =>
     {
         const arr = [1, 2, 3];
-        arr.x.insert(3, ...[4, 5]);
+        arr.xInsert(3, ...[4, 5]);
         console.log(arr);
         assertEquals(arr.length, 5);
     });
@@ -16,12 +16,12 @@ Deno.test({ name: "test Array.insertMany throws on index out of range" },
         const arr = [1, 2, 3];
         assertThrows(() =>
         {
-            arr.x.insert(4, ...[4, 5]);
+            arr.xInsert(4, ...[4, 5]);
         });
 
         assertThrows(() =>
         {
-            arr.x.insert(-1, ...[4, 5]);
+            arr.xInsert(-1, ...[4, 5]);
         });
 
     });
@@ -29,16 +29,16 @@ Deno.test({ name: "test Array.insertMany throws on index out of range" },
 Deno.test({ name: "intersect" },
     () =>
     {
-        const output = [1,2,3,4,5,5,5,6].x.intersect([5,6,7,8,9]);
+        const output = [1,2,3,4,5,5,5,6].xIntersect([5,6,7,8,9]);
         assertEquals(output.length, 4)
     });
 
 Deno.test({ name: "intersects" },
     () =>
     {
-        const output = [1,2,3,4].x.intersects([5,6,7,8,9]);
+        const output = [1,2,3,4].xIntersects([5,6,7,8,9]);
         assertEquals(output, false);
 
-        const output2 = [1,2,3,4,5].x.intersects([5,6,7,8,9]);
+        const output2 = [1,2,3,4,5].xIntersects([5,6,7,8,9]);
         assertEquals(output2, true);
     });

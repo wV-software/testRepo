@@ -1,52 +1,60 @@
-interface IxReadonlyArray<T>
+// define the extenstion interface
+interface IReadonlyArray<T>
 {
     // turnTo<TReturn>(callbackfn: (value: T, index: number, array: T[]) => TReturn): TReturn[];
-    select<TReturn>(func: (arg: T)=>TReturn): TReturn[];
-    selectMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[];
-    sort(comparer: (a: T, b: T) => number): T[];
+    xSelect<TReturn>(func: (arg: T)=>TReturn): TReturn[];
+    xSelectMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[];
+    xSort(comparer: (a: T, b: T) => number): T[];
     reverse(): T[];
-    isAny(checker?: (arg: T) => boolean): boolean;
-    areAll(checker: (arg: T) => boolean): boolean;
-    isEmpty(): boolean;
-    first(checker?: (i: T) => boolean): T | undefined;
-    firstIndex(checker: (i: T) => boolean): number;
-    last(checker?: (i:T)=>boolean): T|undefined;
-    except(another: T[]): T[];
-    intersect(another: T[]): T[];
-    intersects(another: T[]): boolean;
-    clone(): T[];
-    contains(item: T): boolean;
-    distinct(): T[];
-    toMap<TKey>(keySelector: (item: T)=>TKey, distinctItems:boolean): Map<TKey, T[]>;
-    where(checker: (arg: T, index?: number) => boolean): T[];
+    xIsAny(checker?: (arg: T) => boolean): boolean;
+    xAreAll(checker: (arg: T) => boolean): boolean;
+    xIsEmpty(): boolean;
+    xFirst(checker?: (i: T) => boolean): T | undefined;
+    xFirstIndex(checker: (i: T) => boolean): number;
+    xLast(checker?: (i:T)=>boolean): T|undefined;
+    xExcept(another: T[]): T[];
+    xIntersect(another: T[]): T[];
+    xIntersects(another: T[]): boolean;
+    xClone(): T[];
+    xContains(item: T): boolean;
+    xDistinct(): T[];
+    xToMap<TKey>(keySelector: (item: T)=>TKey, distinctItems:boolean): Map<TKey, T[]>;
+    xWhere(checker: (arg: T, index?: number) => boolean): T[];
 }
 
-declare interface ReadonlyArray<T>
+// merge extension interface with the intrinsic interface
+declare interface ReadonlyArray<T> extends IReadonlyArray<T>
 {
-    get x(): IxReadonlyArray<T>;
+    
 }
-interface IxArray<T> extends IxReadonlyArray<T>
+
+// define the extension interface
+interface IArray<T> extends IReadonlyArray<T>
 {
-    add(...items: T[]): void;
-    insert(index: number, ...items: T[]): void;
+    get xCount(): number;
 
-    sortInPlace(comparer: (a: T, b: T) => number): T[];
+    xAdd(...items: T[]): void;
+    xInsert(index: number, ...items: T[]): void;
 
-    reverseInPlace(): T[];
+    xSortInPlace(comparer: (a: T, b: T) => number): T[];
 
-    ensure(item: T): T;
+    xReverseInPlace(): T[];
 
-    union(another: T[]): T[];
+    xEnsure(item: T): T;
+
+    xUnion(another: T[]): T[];
 
 
-    reset(): void;
+    xReset(): void;
 
-    replaceRange(range: { start: number; end: number; } | { start: number; count: number; }, replacement: T[]): {removed: T[]}
-    removeAt(index: number): { removed: T[] };
+    xReplaceRange(range: { start: number; end: number; } | { start: number; count: number; }, replacement: T[]): {removed: T[]}
+    xRemoveAt(index: number): { removed: T[] };
 
-    removeWhere(selector: (item: T)=>boolean): {removed: T[]}
+    xRemoveWhere(selector: (item: T)=>boolean): {removed: T[]}
 }
-declare interface Array<T>
+
+// merge extension interface with the intrinsic interface
+declare interface Array<T> extends IArray<T>
 {
-    get x(): IxArray<T>;
+    
 }

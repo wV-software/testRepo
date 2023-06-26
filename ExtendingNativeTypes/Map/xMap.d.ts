@@ -1,20 +1,26 @@
-declare interface IKeyValuePair<TKey, TValue> {
+declare interface IKeyValuePair<TKey, TValue>
+{
     Key: TKey;
     Value: TValue;
 }
 
-declare interface IxMap<K, V> {
-    get keys(): K[];
-    get values(): V[];
-    readonly length: number;
-    add(key: K, value: V): void;
-    ensure(key: K, value: V, overwriteIfExising: boolean): V;
-    removeIfAny(key: K): { removedItem: V|undefined; };
-    clear(): void;
-    containsKey(key: K): boolean;
-    isAny(checker?:(kv: IKeyValuePair<K, V>)=>boolean): boolean;
-}
-declare interface Map<K,V>
+// define the extenstion interface
+declare interface IMap<K, V>
 {
-    get x(): IxMap<K, V>;
+    get xCount(): number;
+    xKeys(): K[];
+    xValues(): V[];
+    readonly xLength: number;
+    xAdd(key: K, value: V): void;
+    xEnsure(key: K, value: V, overwriteIfExising: boolean): V;
+    xRemoveIfAny(key: K): { removedItem: V | undefined; };
+    xClear(): void;
+    xContainsKey(key: K): boolean;
+    xIsAny(checker?: (kv: IKeyValuePair<K, V>) => boolean): boolean;
+}
+
+// merge extension interface with the intrinsic interface
+declare interface Map<K, V> extends IMap<K, V>
+{
+
 }

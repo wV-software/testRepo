@@ -5,20 +5,20 @@ import '../ExtendingNativeTypes/String/xString.ts';
 Deno.test({ name: "sub" },
     () =>
     {
-        const output = 'George'.x.range({ start: 2, count: 2 });
+        const output = 'George'.xRange({ start: 2, count: 2 });
         assertEquals(output, `or`);
 
-        let output2 = 'George'.x.range({ start: 2, end: 2 });
+        let output2 = 'George'.xRange({ start: 2, end: 2 });
         assertEquals(output2, `o`);
 
-        let output3 = 'George'.x.range({ start: 2, end: 4 });
+        let output3 = 'George'.xRange({ start: 2, end: 4 });
         assertEquals(output3, `org`);
     });
 
 Deno.test({ name: "replaceRange" },
     () =>
     {
-        const output = 'George'.x.replaceRange({ start: 0, count: 1 }, '||||||');
+        const output = 'George'.xReplaceRange({ start: 0, count: 1 }, '||||||');
         console.log(output);
         // assertEquals(output, `or`);
 
@@ -27,9 +27,9 @@ Deno.test({ name: "replaceRange" },
 Deno.test({ name: "encodeToBase64" },
     () =>
     {
-        const output = 'George'.x.encodeToBase64();
+        const output = 'George'.xEncodeToBase64();
         console.log(output);
         // assertEquals(output, `or`);
-        console.log(output.x.decodeBase64());
+        console.log(output.xDecodeBase64());
 
     });

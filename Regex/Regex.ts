@@ -105,7 +105,7 @@ export class Regex
             const indexInInput = match.index + indexInMatch;
             const group = new RegexGroup(groupName, groupValue, indexInMatch, indexInInput, match);
             console.log(group);
-            outputGroups.x.add(groupName, group);
+            outputGroups.xAdd(groupName, group);
         }
 
         return match;
@@ -115,7 +115,7 @@ export class Regex
     {
         this._regExp.lastIndex = startingFromIndex;
 
-        const match = this.getMatches(input)?.x.last();
+        const match = this.getMatches(input)?.xLast();
         this._regExp.lastIndex = 0;
         return match;
     }
@@ -143,7 +143,7 @@ export class Regex
                 matchValue.length,
                 outputGroups
             );
-            output.x.add(match);
+            output.xAdd(match);
 
 
 
@@ -160,7 +160,7 @@ export class Regex
                 const indexInInput = match.index + indexInMatch;
                 const group = new RegexGroup(groupName, groupValue, indexInMatch, indexInInput, match);
                 console.log(group);
-                outputGroups.x.add(groupName, group);
+                outputGroups.xAdd(groupName, group);
             }
         }
 
@@ -187,21 +187,21 @@ export class Regex
         {
             if (match.index > cursor)
             {
-                outputParts.x.add(input.x.range({start: cursor, count: match.index - cursor}));
+                outputParts.xAdd(input.xRange({start: cursor, count: match.index - cursor}));
             }
             const replacementValue = replacementDeducer(match);
             if (replacementValue !== match.value)
             {
                 realReplacementCount++;
             }
-            outputParts.x.add(replacementValue);
+            outputParts.xAdd(replacementValue);
 
             cursor = match.lastIndex + 1;
         }
 
         if (cursor < input.length - 1)
         {
-            outputParts.x.add(input.x.range({start: cursor, end: input.length - 1}));
+            outputParts.xAdd(input.xRange({start: cursor, end: input.length - 1}));
         }
 
         this._regExp.lastIndex = 0;
@@ -213,7 +213,7 @@ export class Regex
         startingFromIndex = 0): { newString: string, realReplacementCount: number }
     {
         this._regExp.lastIndex = startingFromIndex;
-        const groups = this.getMatches(input).x.selectMany(m => m.groups.x.values).x.where(group => groupNames.x.contains(group.groupName));
+        const groups = this.getMatches(input).xSelectMany(m => m.groups.xValues()).xWhere(group => groupNames.xContains(group.groupName));
         if (groups.length === 0)
         {
             return { newString: input, realReplacementCount: 0 };
@@ -227,21 +227,21 @@ export class Regex
         {
             if (group.indexInInput > cursor)
             {
-                outputParts.x.add(input.x.range({start: cursor, count: group.indexInInput - cursor}));
+                outputParts.xAdd(input.xRange({start: cursor, count: group.indexInInput - cursor}));
             }
             const replacementValue = replacementDeducer(group);
             if (replacementValue !== group.value)
             {
                 realReplacementCount++;
             }
-            outputParts.x.add(replacementValue);
+            outputParts.xAdd(replacementValue);
 
             cursor = group.lastIndexInInput + 1;
         }
 
         if (cursor < input.length - 1)
         {
-            outputParts.x.add(input.x.range({start: cursor, count: input.length - cursor}));
+            outputParts.xAdd(input.xRange({start: cursor, count: input.length - cursor}));
         }
         this._regExp.lastIndex = 0;
         return { newString: outputParts.join(''), realReplacementCount: realReplacementCount };
@@ -260,7 +260,7 @@ export class Regex
         {
             if(condition(match), match.index > cursor)
             {
-                const value = input.x.range({start: cursor, count: match.index - cursor});
+                const value = input.xRange({start: cursor, count: match.index - cursor});
                 const lastIndex = match.index - 1;
                 output.push({value, index: cursor, lastIndex});
             }
@@ -269,7 +269,7 @@ export class Regex
 
         if (cursor < input.length - 1)
         {
-            const value = input.x.range({start: cursor, count:input.length - 1}); 
+            const value = input.xRange({start: cursor, count:input.length - 1}); 
             output.push({value, index: cursor, lastIndex: input.length - 1});
         }
         this._regExp.lastIndex = 0;
@@ -279,7 +279,7 @@ export class Regex
     splitByGroups(input: string, groupNames: string[], condition: (group: RegexGroup) => boolean, startingFromIndex = 0): string[]
     {
         this._regExp.lastIndex = startingFromIndex;
-        const groups = this.getMatches(input).x.selectMany(m => m.groups.x.values).x.where(group => groupNames.x.contains(group.groupName));
+        const groups = this.getMatches(input).xSelectMany(m => m.groups.xValues()).xWhere(group => groupNames.xContains(group.groupName));
         if (groups.length === 0) return [input];
 
         let cursor = 0;
@@ -289,14 +289,14 @@ export class Regex
         {
             if (group.indexInInput > cursor)
             {
-                outputParts.x.add(input.x.range( {start: cursor, count: group.indexInInput - cursor}));
+                outputParts.xAdd(input.xRange( {start: cursor, count: group.indexInInput - cursor}));
             }
             cursor = group.lastIndexInInput + 1;
         }
 
         if (cursor < input.length - 1)
         {
-            outputParts.x.add(input.x.range({start: cursor, count: input.length - 1}));
+            outputParts.xAdd(input.xRange({start: cursor, count: input.length - 1}));
         }
         this._regExp.lastIndex = 0;
         return outputParts;

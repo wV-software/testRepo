@@ -1,95 +1,11 @@
 import { Exception_ArgumentInvalid } from "../../Exceptions/Exception_ArgumentInvalid.ts";
-import { Exception_InvalidOperation } from "../../Exceptions/Exception_InvalidOperation.ts";
 import { Exception_UnintendedExecutionPath } from "../../Exceptions/Exception_UnintendedExecutionPath.ts";
 
-export class xString implements IxString
+// implement extension interface while inheriting the intrinsic class to have access to 
+// its intrinsic members
+class StringX extends String implements IString
 {
-    constructor(private str: string) { }
-    range(range: { start: number, end: number } |
-    { start: number, count: number }): string
-    {
-        if (range.start < 0 || range.start >= this.str.length)
-        {
-            throw new Exception_ArgumentInvalid('range.start', range.start, 'index out of range');
-        }
-        if (Object.hasOwn(range, 'end'))
-        {
-            const end = (range as { end: number }).end;
-            if (end < -1 || end >= this.str.length || end < range.start)
-            {
-                throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
-            }
-
-            return this.str.substring(range.start, end + 1);
-        }
-        else if (Object.hasOwn(range, 'count'))
-        {
-            const count = (range as { count: number }).count;
-            if (count < 0 || range.start + count >= this.str.length)
-            {
-                throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
-            }
-
-            return this.str.substring(range.start, range.start + count);
-        }
-        else
-        {
-            return this.str.substring(range.start);
-        }
-    }
-
-    replaceRange(range: { start: number, end: number } | { start: number, count: number }, replacement: string): string 
-    {
-        if (range.start < 0 || range.start >= this.str.length)
-        {
-            throw new Exception_ArgumentInvalid('range.start', range.start, 'index out of range');
-        }
-        if (Object.hasOwn(range, 'end'))
-        {
-            const end = (range as { end: number }).end;
-            if (end < -1 || end >= this.str.length || end < range.start)
-            {
-                throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
-            }
-
-            const left = this.str.substring(0, range.start);
-            const right = this.str.substring(end + 1);
-
-            return `${left}${replacement}${right}`;
-        }
-        else if (Object.hasOwn(range, 'count'))
-        {
-            const count = (range as { count: number }).count;
-            if (count < 0 || range.start + count >= this.str.length)
-            {
-                throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
-            }
-
-            const left = this.str.substring(0, range.start);
-            const right = this.str.substring(range.start + count);
-
-            return `${left}${replacement}${right}`;
-        }
-        else
-        {
-            throw new Exception_UnintendedExecutionPath(``);
-        }
-    }
-
-    encodeToBase64(): string
-    {
-        return btoa(this.str);
-    }
-
-    decodeBase64(): string
-    {
-        return atob(this.str);
-    }
-}
-
-class StringSub extends String
-{
-    range(range: { start: number, end: number } |
+    xRange(range: { start: number, end: number } |
     { start: number, count: number }): string
     {
         if (range.start < 0 || range.start >= this.length)
@@ -109,7 +25,7 @@ class StringSub extends String
         else if (Object.hasOwn(range, 'count'))
         {
             const count = (range as { count: number }).count;
-            if (count < 0 || range.start + count >= this.str.length)
+            if (count < 0 || range.start + count >= this.length)
             {
                 throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
             }
@@ -122,9 +38,9 @@ class StringSub extends String
         }
     }
 
-    replaceRange(range: { start: number, end: number } | { start: number, count: number }, replacement: string): string 
+    xReplaceRange(range: { start: number, end: number } | { start: number, count: number }, replacement: string): string 
     {
-        if (range.start < 0 || range.start >= this.str.length)
+        if (range.start < 0 || range.start >= this.length)
         {
             throw new Exception_ArgumentInvalid('range.start', range.start, 'index out of range');
         }
@@ -160,39 +76,49 @@ class StringSub extends String
         }
     }
 
-    encodeToBase64(): string
+    xEncodeToBase64(): string
     {
         return btoa(this as unknown as string);
     }
 
-    decodeBase64(): string
+    xDecodeBase64(): string
     {
         return atob(this as unknown as string);
     }
-
-    get testGetter(): string
-    {
-        return 'sakamaka';
-    }
 }
 
-
-
-
-Object.defineProperty(String.prototype, 'x',
-    {
-        get: function ()
-        {
-            return new xString(this);
-        }
-    });
-
-const props = Object.getOwnPropertyNames(StringSub.prototype);
+// Assign the description of the added properties to the intrinsic type
+const srcProto = StringX.prototype;
+const dstProto = String.prototype;
+const props = Object.getOwnPropertyNames(srcProto);
 for (const prop of props)
 {
     if (prop === 'constructor') continue;
 
-    const proto = String.prototype as any;
-    const xProto = StringSub.prototype as any;
-    proto[prop] = xProto[prop];
+    const addedProp = Object.getOwnPropertyDescriptor(srcProto, prop);
+    Object.defineProperty(dstProto, prop, addedProp!);
 }
+
+
+
+// const props = Object.getOwnPropertyNames(StringX.prototype);
+// for (const prop of props)
+// {
+//     if (prop === 'constructor') continue;
+
+//     const proto = String.prototype as any;
+//     const xProto = StringX.prototype as any;
+//     proto[prop] = xProto[prop];
+// }
+
+
+
+// Object.defineProperty(String.prototype, 'x',
+//     {
+//         get: function ()
+//         {
+//             return new xString(this);
+//         }
+//     });
+
+

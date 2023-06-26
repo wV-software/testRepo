@@ -1,32 +1,39 @@
 import { Exception_ArgumentInvalid } from "../../Exceptions/Exception_ArgumentInvalid.ts";
 import { Exception_InvalidOperation } from "../../Exceptions/Exception_InvalidOperation.ts";
 import { Exception_UnintendedExecutionPath } from "../../Exceptions/Exception_UnintendedExecutionPath.ts";
-export class xArray<T> implements IxArray<T>
+
+// implement extension interface while inheriting the intrinsic class to have access to 
+// its intrinsic members
+export class ArrayX<T> extends Array<T> implements IArray<T>
 {
-    constructor(private array: Array<T>) { }
-
-    add(...items: T[]): void
+    constructor() { super(); }
+    xAdd(...items: T[]): void
     {
-        this.array.push(...items);
+        this.push(...items);
     }
 
-    clone(): T[]
+    get xCount(): number
     {
-        return [...this.array];
+        return this.length;
     }
 
-    select<TReturn>(func: (item: T, index?: number, items?: T[]) => TReturn): TReturn[]
+    xClone(): T[]
     {
-        return this.array.map(func);
+        return [...this];
     }
 
-    selectMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[]
+    xSelect<TReturn>(func: (item: T, index?: number, items?: T[]) => TReturn): TReturn[]
+    {
+        return this.map(func);
+    }
+
+    xSelectMany<TReturn>(func: (arg: T) => TReturn[]): TReturn[]
     {
         const result: TReturn[] = [];
 
-        for (let x = 0; x < this.array.length; x++)
+        for (let x = 0; x < this.length; x++)
         {
-            const itemResult: TReturn[] = func((this.array[x]) as unknown as T);
+            const itemResult: TReturn[] = func((this[x]) as unknown as T);
             if (itemResult != null) 
             {
                 result.push(...itemResult);
@@ -36,53 +43,53 @@ export class xArray<T> implements IxArray<T>
         return result;
     }
 
-    where(checker: (arg: T, index?: number) => boolean): T[]
+    xWhere(checker: (arg: T, index?: number) => boolean): T[]
     {
-        return this.array.filter((item, index) => checker(item, index));
+        return this.filter((item, index) => checker(item, index));
     }
 
-    insert(index: number, ...items: T[])
+    xInsert(index: number, ...items: T[])
     {
-        if (index < 0 || index > this.array.length)
+        if (index < 0 || index > this.length)
         {
             throw new Exception_InvalidOperation(`index out of range`);
         }
 
         if (items.length === 0) return;
 
-        this.array.splice(index, 0, ...items);
+        this.splice(index, 0, ...items);
     }
 
-    sort(comparer: (a: T, b: T) => number): T[]
+    xSort(comparer: (a: T, b: T) => number): T[]
     {
-        const copy = [...this.array];
+        const copy = [...this];
         copy.sort(comparer);
         return copy;
     }
 
-    sortInPlace(comparer: (a: T, b: T) => number): T[]
+    xSortInPlace(comparer: (a: T, b: T) => number): T[]
     {
-        this.array.sort(comparer);
-        return this.array;
+        this.sort(comparer);
+        return this;
     }
 
     reverse(): T[]
     {
-        return [...this.array].reverse();
+        return [...this].reverse();
     }
-    reverseInPlace(): T[]
+    xReverseInPlace(): T[]
     {
-        this.array.reverse();
-        return this.array;
+        this.reverse();
+        return this;
     }
 
-    isAny(checker?: (arg: T) => boolean): boolean
+    xIsAny(checker?: (arg: T) => boolean): boolean
     {
-        if (checker == null) return this.array.length > 0;
+        if (checker == null) return this.length > 0;
 
-        for (let x = 0; x < this.array.length; x++)
+        for (let x = 0; x < this.length; x++)
         {
-            if (checker(this.array[x] as T) === true)
+            if (checker(this[x] as T) === true)
             {
                 return true;
             }
@@ -90,9 +97,9 @@ export class xArray<T> implements IxArray<T>
         return false;
     }
 
-    areAll(checker: (arg: T) => boolean)
+    xAreAll(checker: (arg: T) => boolean)
     {
-        for (const item of this.array)
+        for (const item of this)
         {
             if (!checker(item)) return false;
         }
@@ -100,82 +107,82 @@ export class xArray<T> implements IxArray<T>
         return true;
     }
 
-    isEmpty(): boolean
+    xIsEmpty(): boolean
     {
-        return this.array.length === 0;
+        return this.length === 0;
     }
-    first(checker?: (i: T) => boolean): T | undefined
+    xFirst(checker?: (i: T) => boolean): T | undefined
     {
-        if (this.array.length === 0) return undefined;
-        if (!checker) return this.array[0];
+        if (this.length === 0) return undefined;
+        if (!checker) return this[0];
 
-        for (const item of this.array)
+        for (const item of this)
         {
             if (checker(item)) return item;
         }
 
         return undefined;
     }
-    firstIndex(checker: (i: T) => boolean): number 
+    xFirstIndex(checker: (i: T) => boolean): number 
     {
-        for (let x = 0; x < this.array.length; x++)
+        for (let x = 0; x < this.length; x++)
         {
-            if (checker(this.array[x])) return x;
+            if (checker(this[x])) return x;
         }
 
         return -1;
     }
     lastIndex(checker: (i: T) => boolean): number 
     {
-        for (let x = this.array.length - 1; x >= 0; x--)
+        for (let x = this.length - 1; x >= 0; x--)
         {
-            if (checker(this.array[x])) return x;
+            if (checker(this[x])) return x;
         }
 
         return -1;
     }
 
-    last(checker?: (i: T) => boolean): T | undefined
+    xLast(checker?: (i: T) => boolean): T | undefined
     {
-        if (this.array.length === 0) return undefined;
-        if (!checker) return this.array[this.array.length - 1];
+        if (this.length === 0) return undefined;
+        if (!checker) return this[this.length - 1];
 
-        for (let x = this.array.length - 1; x > -1; x--)
+        for (let x = this.length - 1; x > -1; x--)
         {
-            if (checker(this.array[x])) return this.array[x];
+            if (checker(this[x])) return this[x];
         }
 
         return undefined;
     }
-    ensure(item: T): T
+    xEnsure(item: T): T
     {
-        const first = this.first(i => i === item);
+        const first = this.xFirst(i => i === item);
         if (first) return first;
 
-        this.array.push(item);
+        this.push(item);
         return item;
     }
-    union(another: T[]): T[]
+    xUnion(another: T[]): T[]
     {
-        return [...this.array, ...another];
+        return [...this, ...another];
     }
-    removeAt(index: number): { removed: T[] }
+    xRemoveAt(index: number): { removed: T[] }
     {
-        if (index < 0 || index >= this.array.length)
+        if (index < 0 || index >= this.length)
         {
             throw new Exception_InvalidOperation(`index out of range`);
         }
 
-        const output = { removed: this.array.splice(index, 1) };
+        const output = { removed: this.splice(index, 1) };
         return output;
     }
-    except(another: T[]): T[]
+    xExcept(another: T[]): T[]
     {
         let result: T[] = [];
 
-        for (const item of this.array)
+        for (const item of this)
         {
-            if (!another.x.isAny(i => i === item) === false)
+            if (!another.xIsAny(i => i === item) === false)
             {
                 result.push(item);
             }
@@ -183,10 +190,10 @@ export class xArray<T> implements IxArray<T>
 
         return result;
     }
-    intersect(another: T[]): T[]
+    xIntersect(another: T[]): T[]
     {
         const output: T[] = [];
-        for (const item1 of this.array)
+        for (const item1 of this)
         {
             for (const item2 of another)
             {
@@ -200,9 +207,9 @@ export class xArray<T> implements IxArray<T>
 
         return output;
     }
-    intersects(another: T[]): boolean
+    xIntersects(another: T[]): boolean
     {
-        for (const item1 of this.array)
+        for (const item1 of this)
         {
             for (const item2 of another)
             {
@@ -215,38 +222,38 @@ export class xArray<T> implements IxArray<T>
 
         return false;
     }
-    reset(): void
+    xReset(): void
     {
-        this.array.length = 0;
+        this.length = 0;
     }
 
-    replaceRange(range: { start: number; end: number; } | { start: number; count: number; }, replacement: T[]): { removed: T[] }
+    xReplaceRange(range: { start: number; end: number; } | { start: number; count: number; }, replacement: T[]): { removed: T[] }
     {
-        if (range.start < 0 || range.start >= this.array.length)
+        if (range.start < 0 || range.start >= this.length)
         {
             throw new Exception_ArgumentInvalid('range.start', range.start, 'index out of range');
         }
         if (Object.hasOwn(range, 'end'))
         {
             const end = (range as { end: number }).end;
-            if (end < -1 || end >= this.array.length || end < range.start)
+            if (end < -1 || end >= this.length || end < range.start)
             {
                 throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
             }
 
             const count = end - range.start + 1;
-            const removed = [...this.array].splice(range.start, count, ...replacement);
+            const removed = [...this].splice(range.start, count, ...replacement);
             return { removed };
         }
         else if (Object.hasOwn(range, 'count'))
         {
             const count = (range as { count: number }).count;
-            if (count < 0 || range.start + count >= this.array.length)
+            if (count < 0 || range.start + count >= this.length)
             {
                 throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
             }
 
-            const removed = [...this.array].splice(range.start, count, ...replacement);
+            const removed = [...this].splice(range.start, count, ...replacement);
             return { removed };
         }
         else
@@ -255,16 +262,16 @@ export class xArray<T> implements IxArray<T>
         }
     }
 
-    removeWhere(selector: (item: T) => boolean): { removed: T[] }
+    xRemoveWhere(selector: (item: T) => boolean): { removed: T[] }
     {
         const removed: T[] = [];
-        for (let x = 0; x < this.array.length; x++)
+        for (let x = 0; x < this.length; x++)
         {
-            const item = this.array[x];
+            const item = this[x];
             if (selector(item))
             {
                 removed.push(item);
-                this.removeAt(x);
+                this.xRemoveAt(x);
                 x--;
             }
         }
@@ -272,10 +279,10 @@ export class xArray<T> implements IxArray<T>
         return { removed };
     }
 
-    toMap<TKey>(keySelector: (item: T) => TKey, distinctItems: boolean): Map<TKey, T[]>
+    xToMap<TKey>(keySelector: (item: T) => TKey, distinctItems: boolean): Map<TKey, T[]>
     {
         const map = new Map<TKey, T[]>();
-        for (let item of this.array)
+        for (let item of this)
         {
             const key = keySelector(item);
             let keyItems: T[];
@@ -294,28 +301,31 @@ export class xArray<T> implements IxArray<T>
         return map;
     }
 
-    contains(item: T): boolean
+    xContains(item: T): boolean
     {
-        return !!this.first(i => i === item);
+        return !!this.xFirst(i => i === item);
     }
-    distinct(): T[]
+    xDistinct(): T[]
     {
         const output: T[] = [];
-        const clone = [...this.array];
-        while(clone.length > 0)
+        const clone = [...this];
+        while (clone.length > 0)
         {
-            const {removed} = clone.x.removeWhere(i => i === clone[0]);
+            const { removed } = clone.xRemoveWhere(i => i === clone[0]);
             output.push(removed[0]);
         }
         return output;
     }
 }
 
+// Assign the description of the added properties to the intrinsic type
+const srcProto = ArrayX.prototype;
+const dstProto = Array.prototype;
+const props = Object.getOwnPropertyNames(srcProto);
+for (const prop of props)
+{
+    if (prop === 'constructor') continue;
 
-Object.defineProperty(Array.prototype, 'x',
-    {
-        get: function ()
-        {
-            return new xArray<any>(this);
-        }
-    });
+    const addedProp = Object.getOwnPropertyDescriptor(srcProto, prop);
+    Object.defineProperty(dstProto, prop, addedProp!);
+}

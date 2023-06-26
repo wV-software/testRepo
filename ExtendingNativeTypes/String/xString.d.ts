@@ -1,21 +1,18 @@
-interface IxString
+// define the extenstion interface
+interface IString
 {
-    range(range:{start: number, end?:number}|
+    xRange(range:{start: number, end?:number}|
         {start: number, count?: number}): string;
 
-    replaceRange(range:{start: number, end:number}|{start: number, count: number}, replacement: string): string;
+    xReplaceRange(range:{start: number, end:number}|{start: number, count: number}, replacement: string): string;
 
-    encodeToBase64(): string;
+    xEncodeToBase64(): string;
 
-    decodeBase64(): string
+    xDecodeBase64(): string;
 }
 
 
-declare interface String
+declare interface String extends IString
 {
-    get x(): IxString;
-
-    encodeToBase64(): string;
-
-    get testGetter(): string;
+    
 }

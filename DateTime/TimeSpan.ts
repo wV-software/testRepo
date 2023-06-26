@@ -15,7 +15,7 @@ export class TimeSpan
     {
         text = text.trim();
         let parts = text.split(/\s*\D\s*/); 
-        if((parts.length<1 || parts.length>5) || parts.x.isAny(p=>/\D/.test(p)))
+        if((parts.length<1 || parts.length>5) || parts.xIsAny(p=>/\D/.test(p)))
         {
             if(details)
             {

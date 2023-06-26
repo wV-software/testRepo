@@ -2,106 +2,114 @@ import { Exception_ArgumentInvalid } from "../../Exceptions/Exception_ArgumentIn
 
 export class KeyValuePair<TKey, TValue>
 {
-    public Key:TKey;
-    public Value:TValue; 
+    public Key: TKey;
+    public Value: TValue;
 
-    constructor(key: TKey, value:TValue)
+    constructor(key: TKey, value: TValue)
     {
         this.Key = key;
         this.Value = value;
     }
 }
 
+// implement extension interface while inheriting the intrinsic class to have access to 
+// its intrinsic members
+export class MapX<K, V> extends Map<K, V> implements IMap<K, V>
+{
+    constructor(iterable: Iterable<[K, V]>) { super(iterable); }
 
-type actionOnKeyValue<TKey, TValue> = (kv:KeyValuePair<TKey, TValue>) => void; 
-
-export class xMap<K, V> implements IxMap<K, V> 
-{ 
-    constructor(private _map: Map<K, V>) { }
-
-    public add(key:K, value:V):void
+    public xAdd(key: K, value: V): void
     {
-        if(this._map.has(key)) 
-        throw new Exception_ArgumentInvalid('key', key, `The Map aleardy has the specified key: ${key}`);     
-        this._map.set(key, value);
+        if (this.has(key))
+            throw new Exception_ArgumentInvalid('key', key, `The Map aleardy has the specified key: ${key}`);
+        this.set(key, value);
     }
 
-    public ensure(key:K, value:V, overwriteIfExising: boolean = false): V
+    get xCount(): number
     {
-        if(this._map.has(key))
+        return this.size;
+    }
+
+    public xEnsure(key: K, value: V, overwriteIfExising: boolean = false): V
+    {
+        if (this.has(key))
         {
-            if(overwriteIfExising)
+            if (overwriteIfExising)
             {
-                this._map.set(key, value);
+                this.set(key, value);
                 return value;
             }
             else
             {
-                return this._map.get(key) as V;
+                return this.get(key) as V;
             }
         }
         else
         {
-            this._map.set(key, value);
+            this.set(key, value);
             return value;
         }
     }
 
-    public removeIfAny(key:K): {removedItem: V|undefined}
+    public xRemoveIfAny(key: K): { removedItem: V | undefined }
     {
-        const output = {removedItem: this._map.get(key)};
-        this._map.delete(key);
+        const output = { removedItem: this.get(key) };
+        this.delete(key);
         return output;
     }
 
-    get keys(): K[]
+    xKeys(): K[]
     {
-        return Array.from(this._map.keys());
+        return Array.from(this.keys());
     }
 
-    get values(): V[]
+    xValues(): V[]
     {
-        return Array.from(this._map.values());
+        return Array.from(this.values());
     }
 
-    clear(): void
+    xClear(): void
     {
-        this._map.clear();
+        this.clear();
     }
 
-    containsKey(key:K): boolean
+    xContainsKey(key: K): boolean
     {
-        for(let k of this._map.keys())
+        for (let k of this.keys())
         {
-            if(key === k) return true;
+            if (key === k) return true;
         }
 
         return false;
     }
 
-    get length(): number
+    get xLength(): number
     {
-        return this._map.size;
+        return this.size;
     }
 
-    isAny(checker?:(kv: KeyValuePair<K, V>)=>boolean): boolean
+    xIsAny(checker?: (kv: KeyValuePair<K, V>) => boolean): boolean
     {
-        if(!checker) return this._map.size > 0;
+        if (!checker) return this.size > 0;
 
-        for(let entry of this._map.entries())
+        for (let entry of this.entries())
         {
             const kv = new KeyValuePair<K, V>(entry[0] as K, entry[1] as V);
-            if(checker(kv)) return true;
+            if (checker(kv)) return true;
         }
 
         return false;
     }
 }
 
-Object.defineProperty(Map.prototype, 'x',
+// Assign the description of the added properties to the intrinsic type
+const srcProto = MapX.prototype;
+const dstProto = Map.prototype;
+const props = Object.getOwnPropertyNames(srcProto);
+for (const prop of props)
 {
-    get: function ()
-    {
-        return new xMap(this);
-    }
-});
+    if (prop === 'constructor') continue;
+
+    const addedProp = Object.getOwnPropertyDescriptor(srcProto, prop);
+    Object.defineProperty(dstProto, prop, addedProp!);
+}

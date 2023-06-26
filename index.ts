@@ -6,6 +6,7 @@ import './ExtendingNativeTypes/String/xString.d.ts';
 import './ExtendingNativeTypes/Map/xMap.ts';
 import './ExtendingNativeTypes/Map/xMap.d.ts';
 import './ExtendingNativeTypes/Object/xObject.d.ts'
+import './ExtendingNativeTypes/Object/xObject.ts'
 
 export { Guid } from './Guid/Guid.ts';
 export {Exception} from './Exceptions/Exception.ts'
@@ -24,14 +25,25 @@ export {TypeInfo} from './TypeInfo/TypeInfo.ts';
 export {isPrimitive} from './globalFunctions/isPrimitive.ts';
 export {waitAsync, CancellationToken} from './globalFunctions/waitAsync.ts'
 
-class Something
+class Something extends Object
 {
-
+    name!: string;
+    age!: number;
 }
+
+const b = new Something()
+b.name = 'george';
+b.age = 15;
+const map = b.toMap();
+console.log(map);
+
+
+let a = new Map<string, string>();
+a.xAdd("", "");
 
 let x = {test: ""}
 
-let y = "George".testGetter;
+let y = "George".xReplaceRange({start: 1, end: 3}, "|||");
 console.log(y);
 
 
