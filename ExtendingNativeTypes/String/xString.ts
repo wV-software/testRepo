@@ -87,6 +87,95 @@ export class xString implements IxString
     }
 }
 
+class StringSub extends String
+{
+    range(range: { start: number, end: number } |
+    { start: number, count: number }): string
+    {
+        if (range.start < 0 || range.start >= this.length)
+        {
+            throw new Exception_ArgumentInvalid('range.start', range.start, 'index out of range');
+        }
+        if (Object.hasOwn(range, 'end'))
+        {
+            const end = (range as { end: number }).end;
+            if (end < -1 || end >= this.length || end < range.start)
+            {
+                throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
+            }
+
+            return this.substring(range.start, end + 1);
+        }
+        else if (Object.hasOwn(range, 'count'))
+        {
+            const count = (range as { count: number }).count;
+            if (count < 0 || range.start + count >= this.str.length)
+            {
+                throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
+            }
+
+            return this.substring(range.start, range.start + count);
+        }
+        else
+        {
+            return this.substring(range.start);
+        }
+    }
+
+    replaceRange(range: { start: number, end: number } | { start: number, count: number }, replacement: string): string 
+    {
+        if (range.start < 0 || range.start >= this.str.length)
+        {
+            throw new Exception_ArgumentInvalid('range.start', range.start, 'index out of range');
+        }
+        if (Object.hasOwn(range, 'end'))
+        {
+            const end = (range as { end: number }).end;
+            if (end < -1 || end >= this.length || end < range.start)
+            {
+                throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
+            }
+
+            const left = this.substring(0, range.start);
+            const right = this.substring(end + 1);
+
+            return `${left}${replacement}${right}`;
+        }
+        else if (Object.hasOwn(range, 'count'))
+        {
+            const count = (range as { count: number }).count;
+            if (count < 0 || range.start + count >= this.length)
+            {
+                throw new Exception_ArgumentInvalid('range.end', range.start, 'index out of range');
+            }
+
+            const left = this.substring(0, range.start);
+            const right = this.substring(range.start + count);
+
+            return `${left}${replacement}${right}`;
+        }
+        else
+        {
+            throw new Exception_UnintendedExecutionPath(``);
+        }
+    }
+
+    encodeToBase64(): string
+    {
+        return btoa(this as unknown as string);
+    }
+
+    decodeBase64(): string
+    {
+        return atob(this as unknown as string);
+    }
+
+    get testGetter(): string
+    {
+        return 'sakamaka';
+    }
+}
+
 
 
 
@@ -97,3 +186,13 @@ Object.defineProperty(String.prototype, 'x',
             return new xString(this);
         }
     });
+
+const props = Object.getOwnPropertyNames(StringSub.prototype);
+for (const prop of props)
+{
+    if (prop === 'constructor') continue;
+
+    const proto = String.prototype as any;
+    const xProto = StringSub.prototype as any;
+    proto[prop] = xProto[prop];
+}

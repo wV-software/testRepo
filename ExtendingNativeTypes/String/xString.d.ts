@@ -14,4 +14,8 @@ interface IxString
 declare interface String
 {
     get x(): IxString;
+
+    encodeToBase64(): string;
+
+    get testGetter(): string;
 }

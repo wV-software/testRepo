@@ -31,6 +31,9 @@ class Something
 
 let x = {test: ""}
 
+let y = "George".testGetter;
+console.log(y);
+
 
 function test()
 {
