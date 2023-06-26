@@ -58,12 +58,12 @@ export class MapX<K, V> extends Map<K, V> implements IMap<K, V>
         return output;
     }
 
-    xKeys(): K[]
+    get xKeys(): K[]
     {
         return Array.from(this.keys());
     }
 
-    xValues(): V[]
+    get xValues(): V[]
     {
         return Array.from(this.values());
     }

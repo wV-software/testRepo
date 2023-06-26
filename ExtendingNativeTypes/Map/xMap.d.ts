@@ -8,8 +8,8 @@ declare interface IKeyValuePair<TKey, TValue>
 declare interface IMap<K, V>
 {
     get xCount(): number;
-    xKeys(): K[];
-    xValues(): V[];
+    get xKeys(): K[];
+    get xValues(): V[];
     readonly xLength: number;
     xAdd(key: K, value: V): void;
     xEnsure(key: K, value: V, overwriteIfExising: boolean): V;
